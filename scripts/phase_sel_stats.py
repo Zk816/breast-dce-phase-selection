@@ -1,20 +1,4 @@
-"""Confirmatory statistics for the phase-subset sweep, on the seed-pooled per-case Dice.
-
-Three things the manuscript needs and a single paired bootstrap cannot give:
-
-  1. RANKING with multiplicity. Six pairs admit 15 comparisons. Reporting the largest
-     without correction is the classic way to publish a difference that is not there,
-     so every non-pre-registered comparison carries a Holm-adjusted p-value.
-  2. EQUIVALENCE as a curve. "TOST fails at delta=1.5" invites the reader to guess what
-     would have passed. The smallest delta that passes is a number, so report it.
-  3. The CLASS-level test (post-contrast-only vs pre-contrast-containing), which is the
-     claim the manuscript actually makes.
-
-TOST at alpha uses the (1-2*alpha) interval, so the 90% interval is the one checked
-against +-delta, while the reported CI stays 95%.
-
-    python scripts/phase_sel_pool.py && python scripts/phase_sel_stats.py
-"""
+"""Confirmatory statistics for the phase-subset sweep, on the seed-pooled per-case Dice."""
 from __future__ import annotations
 
 import argparse

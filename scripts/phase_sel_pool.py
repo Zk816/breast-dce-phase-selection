@@ -1,15 +1,4 @@
-"""Seed-average the per-case test Dice of every phase subset.
-
-Each subset was trained with several seeds. A comparison between subsets must not
-inherit seed noise from either side, so per-case Dice is averaged over seeds FIRST
-and the paired bootstrap then resamples cases only.
-
-    python scripts/phase_sel_pool.py [--cohort ISPY2] [--min_seeds 5]
-
-Writes results/phase_sel_report/pooled/p<subset>.csv (case,dice) plus a coverage
-table, and the two class-level pools used by the headline test:
-POSTONLY (p12,p13,p23) and PRECONT (p01,p02,p03).
-"""
+"""Seed-average the per-case test Dice of every phase subset."""
 from __future__ import annotations
 
 import argparse

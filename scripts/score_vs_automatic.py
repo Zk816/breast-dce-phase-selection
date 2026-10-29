@@ -1,12 +1,4 @@
-"""Rescore saved k=2 predictions against the uncorrected automatic MAMA-MIA masks.
-
-Bounds the annotation-circularity threat: the released expert masks are expert
-corrections of an automatic model's output, so scoring the same predictions
-against that model's raw output isolates how much of the equal-budget contrast
-survives when the correction step is removed.
-
-    python scripts/score_vs_automatic.py --out results/phase_sel_report/auto_masks
-"""
+"""Rescore saved k=2 predictions against the uncorrected automatic MAMA-MIA masks."""
 from __future__ import annotations
 
 import argparse

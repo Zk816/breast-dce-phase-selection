@@ -1,14 +1,4 @@
-"""Learned phase selection LightningModule (exp_phase_sel.md).
-
-Stage 1 (``select: true``): backbone receives all K phase channels; a
-straight-through Gumbel top-k selector zeroes all but k of them. theta gets 10x
-the backbone LR. Per-epoch theta and the current hard selection are logged; the
-final selection is written to ``results/{run}/selection.json``.
-
-Stage 2 (``select: false``): no selector, ``in_phases`` = k, the datamodule
-feeds only the chosen phases. Same backbone, loss, schedule and epochs, so
-Learned-k / Fixed-k / Random-k / All-phases differ only in which phases enter.
-"""
+"""Learned phase selection LightningModule (exp_phase_sel.md)."""
 from __future__ import annotations
 
 import json

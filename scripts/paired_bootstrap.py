@@ -1,19 +1,4 @@
-"""Paired case-level bootstrap on two per-case Dice CSVs (day2.md GATE).
-
-Two overlapping per-method CIs are NOT a test of a difference. Both methods are
-scored on the SAME cases, so the correct test resamples CASES and recomputes the
-mean of the per-case difference — which is also far tighter than the unpaired
-comparison because case difficulty cancels.
-
-Inputs are the `--out` CSVs written by scripts/unified_eval.py (case,dice).
-
-    python scripts/paired_bootstrap.py --a results/<runA>/per_case.csv \
-                                       --b results/<runB>/per_case.csv \
-                                       [--min_diff 1.5]
-
-Reports mean_A - mean_B in Dice POINTS (x100), its 95% CI, and whether the CI
-excludes zero and clears --min_diff.
-"""
+"""Paired case-level bootstrap on two per-case Dice CSVs (day2.md GATE)."""
 from __future__ import annotations
 
 import argparse

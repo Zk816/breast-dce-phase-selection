@@ -1,19 +1,4 @@
-"""Datamodule for learned phase selection (exp_phase_sel.md, protocol.md §1/§2/§7).
-
-Input = RAW MAGNITUDE phases resampled onto the processed grid (protocol §1),
-normalized with a SINGLE mean/std shared across all phases the model receives
-(protocol §7 — never per-channel, which would destroy cross-phase relations).
-Normalization uses only the phases actually fed in, so a Stage-2 k-phase model
-never touches the phases it was not given.
-
-Action space: the first ``num_phases`` phases of every case; cases with fewer
-are dropped (exp_phase_sel.md VARIABLE K — no padding, no interpolation, since
-a padded phase would be a fake phase the selector could choose). Exclusions are
-printed per cohort at setup.
-
-Splits (protocol §2): patient-level, seed 42, cohort-stratified, generated once
-into ``splits/hold{COHORT}.json`` and reused verbatim afterwards.
-"""
+"""Datamodule for learned phase selection (exp_phase_sel.md, protocol.md §1/§2/§7)."""
 from __future__ import annotations
 
 import json
@@ -83,9 +68,7 @@ class PhaseSelDataset(Dataset):
         return len(self._ids)
 
     def _load(self, pid):
-        """Fast path: mmap the uncompressed phase stack, read only the phases this run
-        needs, and take mu/sd from cached per-phase moments (exact — see
-        scripts/phase_sel_precompute.py --verify). Slow path is the original loader."""
+        """Fast path: mmap the uncompressed phase stack, read only the phases this run"""
         label = nib.load(str(Path(self._root, "labelsTr", f"{pid}.nii.gz"))).get_fdata()[None] > 0
         label = label.astype(np.float32)
         if self._fast is not None:
@@ -229,8 +212,7 @@ class LitPhaseSelDataset(L.LightningDataModule):
               f"num_workers={h.num_workers} fast_cache={h.fast_cache_dir}")
 
     def _ds(self, ids, train):
-        """Augmentation RNG derives from ``aug_seed`` (the TRAINING seed) so replicate
-        seeds get independent crops/flips, while the split stays pinned to ``seed``."""
+        """Augmentation RNG derives from ``aug_seed`` (the TRAINING seed) so replicate"""
         h = self.hparams
         aug = h.seed if h.aug_seed is None else h.aug_seed
         return PhaseSelDataset(ids, h.dataset_root, h.mag_cache_dir, self._times,

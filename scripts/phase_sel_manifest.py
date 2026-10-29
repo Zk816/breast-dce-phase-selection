@@ -1,15 +1,4 @@
-"""One index of every phase-selection run: what it is, where it is, what it scored.
-
-    python scripts/phase_sel_manifest.py            # print the table
-    python scripts/phase_sel_manifest.py --csv      # also write the CSV
-
-Run names carry the FACT (`s2_p12` = fixed phases 1,2; `s1_k2` = selector, k=2).
-The ROLE (learned / clinical / random / exhaustive / curve) is an interpretation
-and lives only here, so a run name never has to be re-read as a claim.
-
-Artifacts for run R are always at: experiments/R.yaml, logs/R.log, tb_logs/R/,
-checkpoints/R/, results/R/{selection.json,pred/,per_case.csv}.
-"""
+"""One index of every phase-selection run: what it is, where it is, what it scored."""
 from __future__ import annotations
 
 import argparse

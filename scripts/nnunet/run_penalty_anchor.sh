@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-# nnU-Net test of the pre-contrast penalty at a fixed budget of three phases:
-# Dataset522 = P1+P2+P3 (no pre) versus Dataset523 = P0+P1+P2 (with pre).
-# Three folds per dataset, all sharing the pinned split, so folds act as seeds.
 set -uo pipefail
 cd "$(dirname "$0")/../.."
 export nnUNet_raw="$PWD/nnunet/nnUNet_raw"

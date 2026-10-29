@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-# Build the five missing two-phase nnU-Net datasets (p13 p23 p01 p02 p03).
-# 520 (p12) already exists, giving the six subsets of the balanced k=2 contrast.
 set -uo pipefail
 cd "$(dirname "$0")/../.."
 export nnUNet_raw="$PWD/nnunet/nnUNet_raw"

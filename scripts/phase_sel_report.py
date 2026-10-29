@@ -1,13 +1,4 @@
-"""Stage-1 selection readout (exp_phase_sel.md LOGGING + SECOND FIGURE).
-
-    python scripts/phase_sel_report.py [--glob 'phasesel_*_s1_*']
-
-Reads every ``results/{run}/selection.json`` written at the end of a Stage-1 run
-and reports, per k: the selection of each seed, cross-seed agreement (exact match
-rate and mean Jaccard), and the acquisition times IN SECONDS of the selected
-phases pooled over cases (phase index means different things at different sites;
-seconds are physically comparable). Also dumps per-case phase availability.
-"""
+"""Stage-1 selection readout (exp_phase_sel.md LOGGING + SECOND FIGURE)."""
 from __future__ import annotations
 
 import argparse
@@ -20,7 +11,7 @@ import matplotlib
 import numpy as np
 
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
+import matplotlib.pyplot as plt
 
 ROOT = "/path/to/MAMA-MIA_v3"
 OUT = Path("results/phase_sel_report")

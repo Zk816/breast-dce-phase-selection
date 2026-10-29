@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-# Finish the per-channel-normalisation arm after the shutdown.
-# Lightning saved best-val checkpoints only (no save_last), so partial runs restart.
 set -uo pipefail
 cd "$(dirname "$0")/.."
 RUNS="p12_ISPY2_seed43 p12_ISPY2_seed44 p13_ISPY2_seed42 p13_ISPY2_seed43 p13_ISPY2_seed44 p23_ISPY2_seed42 p23_ISPY2_seed43 p23_ISPY2_seed44"

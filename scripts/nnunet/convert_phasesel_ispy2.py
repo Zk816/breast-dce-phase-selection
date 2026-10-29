@@ -1,26 +1,4 @@
-"""Build nnU-Net datasets for the phase-selection ceiling anchor (analysis_lock.md item 2).
-
-Two datasets, identical except the phase subset fed in:
-
-  Dataset520_PhaseSel_p12    channels = phases 1,2      (the learned pair)
-  Dataset521_PhaseSel_p0123  channels = phases 0,1,2,3  (all four)
-
-Both use the SAME cases, the SAME within-ISPY2 split as the ResUNet runs
-(splits/withinISPY2_K4.json, 688/96/196), and the SAME source voxels: the fp16
-magnitude phases already resampled onto the processed grid in .phase_sel_cache/.
-So the only difference from our runs is the network and its training recipe —
-which is the point of the anchor.
-
-Two nnU-Net defaults must be overridden after preprocessing:
-  1. per-channel z-scoring  -> shared normalization across phase channels
-     (protocol.md §7; per-channel destroys cross-phase relationships)
-  2. nnU-Net's own 5-fold CV -> our fixed split, written to
-     nnUNet_preprocessed/<ds>/splits_final.json so `--fold 0` uses train+val,
-     and the 196 test cases are held out entirely (they go to imagesTs).
-
-    python scripts/nnunet/convert_phasesel_ispy2.py            # both datasets
-    python scripts/nnunet/convert_phasesel_ispy2.py --check    # verify only
-"""
+"""Build nnU-Net datasets for the phase-selection ceiling anchor (analysis_lock.md item 2)."""
 from __future__ import annotations
 
 import argparse

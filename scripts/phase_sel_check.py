@@ -1,11 +1,4 @@
-"""Stage-1 selector assertions + protocol pre-flight stats (exp_phase_sel.md Day 1).
-
-    python scripts/phase_sel_check.py [--num_phases 4] [--cases 6]
-
-Checks: mask.sum()==k every draw (train and eval); theta.grad non-zero after one
-step; k==K reproduces the unmodified backbone bit-for-bit; per-channel input
-statistics from the real datamodule (protocol.md pre-flight).
-"""
+"""Stage-1 selector assertions + protocol pre-flight stats (exp_phase_sel.md Day 1)."""
 from __future__ import annotations
 
 import argparse

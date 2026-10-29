@@ -1,11 +1,4 @@
-"""Load true-magnitude phases resampled onto the processed (V3) grid.
-
-The processed MAMA-MIA volumes are z-scored (median<0, ~66% negative), so
-relative enhancement E=(S(t)-S0)/S0 is meaningless there — it needs a true zero.
-The raw volumes are positive magnitude with a true zero. We resample each raw
-phase onto the processed pre-contrast grid (linear), so masks/labels/geometry
-stay aligned, and cache the result (computed once, reused by precompute + training).
-"""
+"""Load true-magnitude phases resampled onto the processed (V3) grid."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -34,12 +27,7 @@ def magnitude_phases(pid: str, data_root: str, cache_dir: str = ".rrm_cache_mag"
 
 
 def relative_enhancement(phases: np.ndarray, breast: np.ndarray) -> np.ndarray:
-    """E(t) = (S(t)-S0) / max(S0, 0.05*median(S0 in breast)), clipped to [-1, 5].
-
-    Magnitude-domain enhancement with a positive baseline floor (true zero
-    required); E[0] == 0. Shared by precompute and the datamodule so cached
-    fits and the training input use an identical definition.
-    """
+    """E(t) = (S(t)-S0) / max(S0, 0.05*median(S0 in breast)), clipped to [-1, 5]."""
     pre = phases[0]
     floor = max(0.05 * float(np.median(pre[breast])), 1e-3) if breast.any() else 1e-3
     denom = np.maximum(pre, floor)

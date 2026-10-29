@@ -20,11 +20,7 @@ class LitBase(L.LightningModule):
     _dice: Metric
 
     def __init__(self, *, patch_size: int | tuple[int, int, int] = 128) -> None:
-        """
-        Initialize shared module parameters.
-
-        :param patch_size: the size of the cubical patch
-        """
+        """Initialize shared module parameters."""
         super().__init__()
 
         if isinstance(patch_size, int):
@@ -40,7 +36,6 @@ class LitBase(L.LightningModule):
         loss = self._loss(y_hat, batch["mask"])
 
         dice = self._dice(self._to_mask(y_hat), batch["mask"])
-        # Replace NaN with 0 (occurs when both pred and target are empty)
         dice = torch.nan_to_num(dice, nan=0.0).mean()
 
         self.log("train_loss", loss, on_step=True, on_epoch=True, prog_bar=True, logger=True)
@@ -69,13 +64,7 @@ class LitBase(L.LightningModule):
         self,
         batch: DataBatch | PredictDataBatch,
     ) -> Callable[[torch.Tensor], torch.Tensor]:
-        """
-        Provide a predictor callable for sw inference that only accepts the image.
-
-        All non-image inputs can be filled in from the batch here.
-
-        :returns: predictor callable
-        """
+        """Provide a predictor callable for sw inference that only accepts the image."""
         return self._net
 
     def _compute_val_metrics(self, batch: DataBatch) -> ValidationMetrics:

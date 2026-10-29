@@ -1,20 +1,4 @@
-"""Stratified re-analysis of the phase sweep — the analysis that can falsify the title.
-
-"Two phases suffice" is a claim about the mean. If it fails on any clinically meaningful
-subgroup (small lesions, a tumour subtype, a scanner, a site), the title is wrong. This
-joins per-case test Dice to the MAMA-MIA clinical/imaging metadata and reports the PAIRED
-difference within every stratum, with a case-level bootstrap CI.
-
-    python scripts/phase_sel_stratified.py --a <run_A> --b <run_B> [--min_n 15]
-
-Default comparisons (both matter):
-    p12 vs p0123   -> does k=2 match k=4 in every stratum?      (the title)
-    p12 vs p01     -> learned vs clinical, per stratum          (the confirmatory test)
-
-Strata: lesion-volume quartile, tumour subtype, HR/HER2, field strength, scanner
-manufacturer, site, breast density, multifocality. Mass-vs-NME is NOT available in
-MAMA-MIA metadata and cannot be produced here.
-"""
+"""Stratified re-analysis of the phase sweep — the analysis that can falsify the title."""
 from __future__ import annotations
 
 import argparse
@@ -81,12 +65,7 @@ def paired(a, b, cases, n_boot=1000, seed=42):
 
 
 def bucket(meta, vols, pid):
-    """Only fields that are actually populated for this cohort.
-
-    MAMA-MIA reports tumor_subtype / hr / her2 / pr for 0 of the 196 ISPY2 test cases,
-    and its breast_density column carries acquisition-orientation strings, so neither
-    can be stratified on here. ER status is complete and is the receptor axis we keep.
-    """
+    """Only fields that are actually populated for this cohort."""
     m = meta.get(pid, {})
     out = {}
     v = vols.get(pid)

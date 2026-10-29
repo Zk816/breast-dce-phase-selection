@@ -1,11 +1,4 @@
-"""Unified held-out evaluation (protocol.md §5) — ONE metric for ALL methods.
-
-Full held-out cohort, per-case foreground Dice, mean over cases, 95% CI via
-case-level bootstrap (n=1000). Identical code for nnU-Net / TDNet / IKI: each
-method saves predicted masks; this scores them the same way.
-
-    python scripts/unified_eval.py --pred_dir <preds> --gt_dir <labels> [--label 1]
-"""
+"""Unified held-out evaluation (protocol.md §5) — ONE metric for ALL methods."""
 from __future__ import annotations
 
 import argparse
@@ -17,7 +10,7 @@ import numpy as np
 
 
 def case_hd95(pred, gt, label, spacing):
-    """95th-percentile symmetric surface distance (mm). NaN if either mask is empty."""
+    """95th-percentile symmetric surface distance (mm)."""
     from scipy.ndimage import binary_erosion, distance_transform_edt
     p = pred == label
     g = gt == label
@@ -36,7 +29,7 @@ def case_dice(pred, gt, label):
     g = gt == label
     s = p.sum() + g.sum()
     if s == 0:
-        return 1.0  # both empty = perfect (matches nnU-Net convention)
+        return 1.0
     return 2.0 * float((p & g).sum()) / float(s)
 
 

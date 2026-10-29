@@ -1,14 +1,4 @@
-"""Write held-out-cohort predictions for a phase-selection run (protocol.md §4/§5).
-
-Loads the best internal-val checkpoint (the ONLY selection criterion allowed),
-runs sliding-window inference over the full held-out cohort, and writes one
-uint8 mask per case onto the label grid so `scripts/unified_eval.py` can score
-it with the same code as every other method.
-
-    python scripts/phase_sel_predict.py --run phasesel_20260730_learned2_seed42 --gpu 0
-
-Predictions -> results/{run}/pred/{pid}.nii.gz
-"""
+"""Write held-out-cohort predictions for a phase-selection run (protocol.md §4/§5)."""
 from __future__ import annotations
 
 import argparse

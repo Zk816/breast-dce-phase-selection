@@ -1,12 +1,4 @@
-"""Learned phase selection: straight-through Gumbel top-k over DCE phases.
-
-DECLARED AND FROZEN (exp_phase_sel.md Stage-1 assertions):
-  - The pre-contrast phase (index 0) is ALWAYS SELECTABLE. It is never forced in
-    and never excluded. The selector may keep or drop it like any other phase.
-  - Exactly k phases are active at every step, in training and in eval.
-  - The backbone always receives K channels; only the information content
-    changes, so every k is capacity-matched.
-"""
+"""Learned phase selection: straight-through Gumbel top-k over DCE phases."""
 from __future__ import annotations
 
 import torch

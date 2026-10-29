@@ -1,25 +1,4 @@
-"""Build the fast training cache for the phase-selection sweep.
-
-The training loader was dataloader-bound at 6.7 s/sample: 3.9 s decompressing the
-compressed magnitude npz, 1.3 s resampling the breast mask *per item every epoch*,
-and 0.7 s masked-array indexing. This precomputes both away:
-
-  {pid}.npy        (K, D, H, W) fp16 phases, UNCOMPRESSED so workers mmap it and
-                   read only the phases the run actually needs.
-  {pid}_stats.npz  per-phase sum / sumsq / count over breast-mask voxels, float64.
-
-Normalization statistics for ANY phase subset S are then exact arithmetic:
-
-    n   = count * |S|
-    mu  = sum_{k in S} sum_k / n
-    var = sum_{k in S} sumsq_k / n - mu**2
-
-which is identical to the old ``x[broadcast(mask)].mean()/.std()`` over the same
-voxels — verified to numerical precision by ``--verify`` (run it, do not assume).
-
-    python scripts/phase_sel_precompute.py --cohorts ISPY2,DUKE --workers 24
-    python scripts/phase_sel_precompute.py --verify
-"""
+"""Build the fast training cache for the phase-selection sweep."""
 from __future__ import annotations
 
 import argparse

@@ -1,21 +1,4 @@
-"""Bake shared-across-phase normalization into the nnU-Net anchor datasets.
-
-nnU-Net z-scores EVERY CHANNEL INDEPENDENTLY by default. protocol.md §7 forbids that:
-per-channel normalization gives each phase its own mean and std and destroys exactly the
-cross-phase relationships this study is about. It also fails silently -- training succeeds
-and produces a plausible number from the wrong input.
-
-Rather than patch nnU-Net's normalization registry (unverifiable), we apply the SAME shared
-normalization our ResUNet uses directly to the raw volumes, then tell nnU-Net not to
-normalize at all (NoNormalization in the plans). The two models then differ ONLY in network
-and training recipe, which is what the ceiling anchor is meant to measure.
-
-mu/sd come from the cached per-phase moments (scripts/phase_sel_precompute.py), so they are
-numerically identical to what the ResUNet runs saw -- verified to <1e-6 relative there.
-
-    python scripts/nnunet/normalize_phasesel_datasets.py           # normalize in place
-    python scripts/nnunet/normalize_phasesel_datasets.py --verify  # check only
-"""
+"""Bake shared-across-phase normalization into the nnU-Net anchor datasets."""
 from __future__ import annotations
 
 import argparse
@@ -78,8 +61,6 @@ def verify(name, idx):
         chans = [nib.load(str(ds / "imagesTr" / f"{pid}_{c:04d}.nii.gz")).get_fdata(dtype=np.float32)
                  for c in range(len(idx))]
         x = np.stack(chans)
-        # stats were computed over BREAST-MASK voxels, so verify on the same population;
-        # checking all-nonzero includes chest wall and inflates the std (false alarm).
         import nibabel.processing as nip
         pre = nib.load(f"{ROOT}/imagesTr/{pid}_0000.nii.gz")
         breast = nip.resample_from_to(nib.load(f"{ROOT}/breast_masks/{pid}.nii.gz"),
@@ -118,7 +99,6 @@ def main():
                 if i % 200 == 0:
                     print(f"   {i}/{len(jobs)}", flush=True)
         (ds / FLAG).write_text("shared z-norm across phases applied; use NoNormalization in plans\n")
-        # nnU-Net must NOT normalize again
         dj = ds / "dataset.json"
         d = json.loads(dj.read_text())
         d["channel_names"] = {k: "noNorm" for k in d["channel_names"]}

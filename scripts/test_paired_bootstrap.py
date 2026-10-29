@@ -1,13 +1,4 @@
-"""Unit test for scripts/paired_bootstrap.py (exp_phase_sel_final.md §12 checklist).
-
-    python scripts/test_paired_bootstrap.py
-
-Validates on synthetic data with known answers: (1) a constant offset is recovered
-exactly, (2) identical inputs give zero difference and a CI containing zero,
-(3) pairing is by CASE NAME not row order, (4) the paired CI is tighter than the
-unpaired one when case difficulty is the dominant variance, (5) only shared cases
-are used.
-"""
+"""Unit test for scripts/paired_bootstrap.py (exp_phase_sel_final.md §12 checklist)."""
 from __future__ import annotations
 
 import csv
@@ -50,7 +41,6 @@ def main():
     cases = [f"C_{i:04d}.nii.gz" for i in range(n)]
     difficulty = rng.uniform(0.2, 0.95, n)
 
-    # 1. constant +5-point offset, no other noise
     write(tmp / "a1.csv", zip(cases, np.clip(difficulty + 0.05, 0, 1)))
     write(tmp / "b1.csv", zip(cases, difficulty))
     out = run(tmp / "a1.csv", tmp / "b1.csv")
@@ -61,7 +51,6 @@ def main():
     assert "A better on       = 100.0%" in out, out
     print(f"[OK] constant +5.0-point offset recovered exactly: {diff:+.3f}")
 
-    # 2. identical inputs -> zero difference, CI contains zero
     write(tmp / "a2.csv", zip(cases, difficulty))
     out = run(tmp / "a2.csv", tmp / "b1.csv")
     diff = float(parse(out, "paired difference").split("=")[1].split("Dice")[0])
@@ -69,7 +58,6 @@ def main():
     assert "CI excludes zero  = False" in out, out
     print("[OK] identical inputs -> difference 0.000, CI includes zero")
 
-    # 3. pairing is by case NAME, not row order
     shuffled = list(zip(cases, np.clip(difficulty + 0.05, 0, 1)))
     rng.shuffle(shuffled)
     write(tmp / "a3.csv", shuffled)
@@ -78,7 +66,6 @@ def main():
     assert abs(diff - 5.0) < 0.01, f"row-order shuffle changed the result: {diff}"
     print(f"[OK] row order irrelevant, pairing is by case name: {diff:+.3f}")
 
-    # 4. paired CI is tighter than unpaired when case difficulty dominates
     a = np.clip(difficulty + 0.02 + rng.normal(0, 0.01, n), 0, 1)
     b = np.clip(difficulty + rng.normal(0, 0.01, n), 0, 1)
     write(tmp / "a4.csv", zip(cases, a))
@@ -94,7 +81,6 @@ def main():
     assert paired_w < unpaired_w, f"paired CI {paired_w:.2f} not tighter than unpaired {unpaired_w:.2f}"
     print(f"[OK] paired CI width {paired_w:.2f} pts << summed unpaired widths {unpaired_w:.2f} pts")
 
-    # 5. only shared cases are used
     write(tmp / "a5.csv", list(zip(cases, difficulty))[:150])
     out = run(tmp / "a5.csv", tmp / "b1.csv")
     assert "n paired cases   = 150" in out, out

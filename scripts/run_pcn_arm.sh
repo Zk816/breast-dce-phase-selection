@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-# Per-channel-normalisation arm: 6 k=2 subsets x 3 seeds, within-ISPY2.
-# Pinned to GPUs that our nnU-Net anchor is not using; one job per GPU.
 set -uo pipefail
 cd "$(dirname "$0")/.."
 GPUS=(1 2 3 6 7)

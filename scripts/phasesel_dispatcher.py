@@ -1,22 +1,4 @@
-"""Unattended dispatcher for the phase-selection sweep.
-
-Keeps the GPUs fed for days without a human. Stateless by design: every decision is
-recomputed from `ps` and the tensorboard logs, so there are no PID files to go stale
-and a dispatcher restart is always safe.
-
-  - a run is DONE when its tb log has >= TARGET_EPOCHS val entries
-  - a run is ACTIVE when a process holds its config path
-  - GPU of a running job is read from /proc/<pid>/environ (exact, not guessed)
-  - launches only while total active < MAX_CONCURRENT, onto the least-loaded GPU
-  - a run that dies without finishing is retried up to MAX_ATTEMPTS, then recorded
-    in logs/dispatcher_failed.txt so one bad config cannot stall the queue
-  - pauses launching if free disk drops below MIN_FREE_GB (shared machine)
-  - when all training is done, generates held-out predictions and scores them
-
-    setsid nohup python -u scripts/phasesel_dispatcher.py > logs/dispatcher.log 2>&1 &
-
-Stop cleanly (running jobs are left alone):   touch STOP_DISPATCHER
-"""
+"""Unattended dispatcher for the phase-selection sweep."""
 from __future__ import annotations
 
 import re
@@ -33,7 +15,7 @@ MAX_PER_GPU = 1
 MAX_ATTEMPTS = 2
 TARGET_EPOCHS = 200
 MIN_FREE_GB = 60
-KEEP_PREDICTIONS = False   # delete masks after scoring
+KEEP_PREDICTIONS = False
 POLL = 300
 GT = "/path/to/MAMA-MIA_v3/labelsTr"
 RUN_RE = re.compile(r"^\s*(\d+)\s+.*-m bcaitu_mri_seg fit --config experiments/(phasesel_\S+)\.yaml")
@@ -177,9 +159,6 @@ def main():
         if r.returncode:
             log(f"EVAL FAILED {run} - keeping predictions for diagnosis")
             continue
-        # KEEP_PREDICTIONS=False: per-case Dice/HD95 are now in per_case.csv, so the
-        # masks are redundant. Delete them so nothing accumulates on a shared disk.
-        # They are regenerable from the checkpoint via scripts/phase_sel_predict.py.
         if not KEEP_PREDICTIONS and Path(f"results/{run}/per_case.csv").exists():
             shutil.rmtree(pred, ignore_errors=True)
             log(f"removed predictions for {run} (per_case.csv retained)")
