@@ -1,0 +1,81 @@
+[project]
+name = "bcaitu-mri-seg"
+version = "0.1.0"
+classifiers = ["Private :: Do Not Upload"]
+description = "Breast MRI segmentation"
+readme = "README.md"
+requires-python = ">=3.12.3"
+dependencies = [
+    "einops>=0.8.1",
+    "jsonargparse[signatures]>=4.40.0",
+    "lightning[extra]>=2.5.1.post0",
+    "monai>=1.4.0",
+    "nibabel>=5.3.2",
+    "omegaconf>=2.3.0",
+    "plotly>=6.6.0",
+    "scikit-image>=0.26.0",
+    "seaborn>=0.13.2",
+    "tensorboard>=2.19.0",
+    "torch>=2.7.0",
+    "tqdm>=4.67.1",
+]
+
+[dependency-groups]
+dev = [
+    "jupyter>=1.1.1",
+    "mypy>=1.15.0",
+    "pandas>=2.3.1",
+    "pandas-stubs>=2.3.0.250703",
+    "ruff>=0.11.10",
+    "types-tqdm>=4.67.0.20250516",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = [
+    "bcaitu_mri_seg",
+    "bcaitu_mri_seg.data_modules",
+    "bcaitu_mri_seg.net_modules",
+    "bcaitu_mri_seg.net_modules.phase_sel",
+    "bcaitu_mri_seg.types",
+]
+
+[tool.setuptools.package-data]
+"bcaitu_mri_seg" = ["py.typed"]
+
+[tool.ruff]
+line-length = 100
+indent-width = 4
+
+[tool.ruff.lint]
+select = [
+    "ALL",
+]
+ignore = [
+    "A005",
+    "ANN002",
+    "ANN003",
+    "ARG002",
+    "D102",
+    "D203",
+    "D212",
+    "N812",
+    "PLR0913",
+    "S311",
+]
+[tool.ruff.lint.per-file-ignores]
+"scripts/*.py" = [
+    "D100",
+    "D103",
+    "INP001",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

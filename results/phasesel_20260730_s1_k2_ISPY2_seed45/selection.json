@@ -1,0 +1,16 @@
+{
+  "run": "phasesel_20260730_s1_k2_ISPY2_seed45",
+  "k": 2,
+  "num_phases": 4,
+  "theta": [
+    -9.217630386352539,
+    34.07606887817383,
+    -5.346412181854248,
+    -7.4089765548706055
+  ],
+  "selected_indices": [
+    1,
+    2
+  ],
+  "pre_contrast_policy": "index 0 always selectable, never forced, never excluded"
+}

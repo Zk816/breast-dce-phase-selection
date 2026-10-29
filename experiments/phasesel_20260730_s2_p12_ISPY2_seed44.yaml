@@ -1,0 +1,50 @@
+seed_everything: 44
+model:
+  class_path: bcaitu_mri_seg.net_modules.phase_sel.lit_phase_sel.LitPhaseSelNet
+  init_args:
+    in_phases: 2
+    select: false
+    k: 2
+    init_lr: 0.01
+    lr_scheduler_power: 1.0
+    max_epochs: 200
+    depth: 4
+    max_channels: 512
+    kernel_size: 3
+    num_res_units: 2
+    patch_size: 128
+data:
+  class_path: bcaitu_mri_seg.data_modules.phase_sel_dm.LitPhaseSelDataset
+  init_args:
+    dataset_root: /path/to/MAMA-MIA_v3
+    mag_cache_dir: .rrm_cache_mag
+    fast_cache_dir: .phase_sel_cache
+    split_file: splits/withinISPY2_K4.json
+    num_phases: 4
+    phase_indices: [1, 2]
+    patch_size: 128
+    batch_size: 2
+    num_workers: 20
+    eval_heldout: false
+    seed: 42
+    aug_seed: 44
+trainer:
+  accelerator: gpu
+  devices: [0]
+  precision: bf16-mixed
+  max_epochs: 200
+  gradient_clip_val: 1.0
+  num_sanity_val_steps: 0
+  logger:
+    class_path: lightning.pytorch.loggers.TensorBoardLogger
+    init_args:
+      save_dir: ./tb_logs
+      name: phasesel_20260730_s2_p12_ISPY2_seed44
+  callbacks:
+    - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+      init_args:
+        dirpath: checkpoints/phasesel_20260730_s2_p12_ISPY2_seed44
+        monitor: val_dice
+        mode: max
+        save_top_k: 1
+        filename: phasesel_20260730_s2_p12_ISPY2_seed44-{epoch:03d}-{val_dice:.4f}

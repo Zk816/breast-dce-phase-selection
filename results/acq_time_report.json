@@ -1,0 +1,198 @@
+{
+  "description": "Per-cohort acquisition-time coverage \u2014 source for Figure 1 (justifies the ISPY2-only scope and states the field-level finding).",
+  "units": "seconds relative to phase 0 (pre-contrast)",
+  "cohorts": {
+    "DUKE": {
+      "n_cases": 291,
+      "n_post_contrast_acquisitions": 997,
+      "n_K_ge_4": 287,
+      "first_post_median_s": 210.0,
+      "first_post_min_s": 94.0,
+      "first_post_max_s": 922.0,
+      "sampling_interval_median_s": 121.0,
+      "sampling_interval_iqr_s": [
+        111.0,
+        182.0
+      ],
+      "post_contrast_time_percentiles_s": {
+        "p1": 154.0,
+        "p5": 175.0,
+        "p10": 193.0,
+        "p25": 271.0,
+        "p50": 374.0,
+        "p75": 483.0,
+        "p90": 633.0,
+        "p95": 727.5999999999995,
+        "p99": 1005.04
+      },
+      "bin_occupancy_frac_cases": {
+        "pre_0": 1.0,
+        "early_0_150": 0.027491408934707903,
+        "mid_150_300": 0.852233676975945,
+        "late_300_plus": 0.993127147766323
+      },
+      "frac_cases_with_washin_60_180s": 0.20962199312714777,
+      "acquires_washin": false,
+      "hist_60s_bins": {
+        "0-60": 0,
+        "60-120": 1,
+        "120-180": 59,
+        "180-240": 150,
+        "240-300": 118,
+        "300-360": 153,
+        "360-420": 119,
+        "420-480": 142,
+        "480-540": 69,
+        "540-600": 66,
+        "600-660": 38,
+        "660-720": 29,
+        "720-780": 17,
+        "780-840": 7
+      }
+    },
+    "ISPY1": {
+      "n_cases": 171,
+      "n_post_contrast_acquisitions": 396,
+      "n_K_ge_4": 28,
+      "first_post_median_s": 370.0,
+      "first_post_min_s": 27.0,
+      "first_post_max_s": 915.0,
+      "sampling_interval_median_s": 308.5,
+      "sampling_interval_iqr_s": [
+        212.0,
+        372.5
+      ],
+      "post_contrast_time_percentiles_s": {
+        "p1": 120.0,
+        "p5": 240.0,
+        "p10": 291.5,
+        "p25": 360.0,
+        "p50": 499.0,
+        "p75": 672.75,
+        "p90": 767.5,
+        "p95": 814.5,
+        "p99": 1099.050000000002
+      },
+      "bin_occupancy_frac_cases": {
+        "pre_0": 1.0,
+        "early_0_150": 0.09941520467836257,
+        "mid_150_300": 0.1695906432748538,
+        "late_300_plus": 0.9941520467836257
+      },
+      "frac_cases_with_washin_60_180s": 0.09941520467836257,
+      "acquires_washin": false,
+      "hist_60s_bins": {
+        "0-60": 1,
+        "60-120": 0,
+        "120-180": 17,
+        "180-240": 0,
+        "240-300": 27,
+        "300-360": 49,
+        "360-420": 55,
+        "420-480": 32,
+        "480-540": 32,
+        "540-600": 32,
+        "600-660": 46,
+        "660-720": 33,
+        "720-780": 40,
+        "780-840": 16
+      }
+    },
+    "ISPY2": {
+      "n_cases": 980,
+      "n_post_contrast_acquisitions": 4890,
+      "n_K_ge_4": 980,
+      "first_post_median_s": 128.5,
+      "first_post_min_s": 77.0,
+      "first_post_max_s": 761.0,
+      "sampling_interval_median_s": 93.0,
+      "sampling_interval_iqr_s": [
+        87.0,
+        98.0
+      ],
+      "post_contrast_time_percentiles_s": {
+        "p1": 90.0,
+        "p5": 107.0,
+        "p10": 128.0,
+        "p25": 208.0,
+        "p50": 322.0,
+        "p75": 443.0,
+        "p90": 508.0,
+        "p95": 547.0,
+        "p99": 674.329999999999
+      },
+      "bin_occupancy_frac_cases": {
+        "pre_0": 1.0,
+        "early_0_150": 0.6887755102040817,
+        "mid_150_300": 0.9724489795918367,
+        "late_300_plus": 1.0
+      },
+      "frac_cases_with_washin_60_180s": 0.8153061224489796,
+      "acquires_washin": true,
+      "hist_60s_bins": {
+        "0-60": 0,
+        "60-120": 352,
+        "120-180": 494,
+        "180-240": 718,
+        "240-300": 624,
+        "300-360": 568,
+        "360-420": 713,
+        "420-480": 501,
+        "480-540": 634,
+        "540-600": 168,
+        "600-660": 65,
+        "660-720": 26,
+        "720-780": 9,
+        "780-840": 9
+      }
+    },
+    "NACT": {
+      "n_cases": 64,
+      "n_post_contrast_acquisitions": 137,
+      "n_K_ge_4": 6,
+      "first_post_median_s": 420.5,
+      "first_post_min_s": 331.0,
+      "first_post_max_s": 752.0,
+      "sampling_interval_median_s": 378.0,
+      "sampling_interval_iqr_s": [
+        328.0,
+        432.0
+      ],
+      "post_contrast_time_percentiles_s": {
+        "p1": 349.8,
+        "p5": 367.4,
+        "p10": 379.2,
+        "p25": 426.0,
+        "p50": 694.0,
+        "p75": 788.0,
+        "p90": 957.2,
+        "p95": 1086.1999999999994,
+        "p99": 1575.1999999999982
+      },
+      "bin_occupancy_frac_cases": {
+        "pre_0": 1.0,
+        "early_0_150": 0.0,
+        "mid_150_300": 0.0,
+        "late_300_plus": 1.0
+      },
+      "frac_cases_with_washin_60_180s": 0.0,
+      "acquires_washin": false,
+      "hist_60s_bins": {
+        "0-60": 0,
+        "60-120": 0,
+        "120-180": 0,
+        "180-240": 0,
+        "240-300": 0,
+        "300-360": 3,
+        "360-420": 28,
+        "420-480": 15,
+        "480-540": 9,
+        "540-600": 6,
+        "600-660": 2,
+        "660-720": 18,
+        "720-780": 17,
+        "780-840": 14
+      }
+    }
+  }
+}
